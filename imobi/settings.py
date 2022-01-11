@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 from django.contrib.messages import constants # responsável pela emissão de mensagens como alerta para o usuario
-
 # para a chave
 from decouple import config
 
