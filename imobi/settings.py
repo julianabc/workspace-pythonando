@@ -1,9 +1,9 @@
 from pathlib import Path
 import os
 from django.contrib.messages import constants # responsável pela emissão de mensagens como alerta para o usuario
+
 # para a chave
 from decouple import config
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
