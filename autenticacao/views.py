@@ -65,7 +65,10 @@ def cadastro(request): # recebe a requisicao do usuario como parametro
             return redirect('/auth/cadastro')
 
 
+# metodo para logar
+
 def logar(request):
+    
     if request.method == "GET":
         # se estiver logado, não pode voltar para o login pelo get
         if request.user.is_authenticated:
@@ -86,10 +89,18 @@ def logar(request):
             messages.add_message(request, constants.ERROR, 'Usuário ou senha inválidos!')
             # dá reload na pagina
             return redirect('/auth/logar')
+
         else: 
             # se tiver tudo certo, ele vai criar uma sessão para começar o login
             # os parametros são: a requisição e a variavel que guarda nome e senha
             auth.login(request, usuario)
             return redirect('/')
+
+
+
+def sair(request):
+    auth.logout(request)
+    # depois que dá logout 
+    return redirect('/auth/logar')
 
 

@@ -5,5 +5,6 @@ urlpatterns = [
     # path( url, funcao para açao, name [que não é obrigatório, apenas para organizaçao])
     path('cadastro/', views.cadastro, name='cadastro'), 
     path('logar/', views.logar, name='logar'),
+    path('sair/', views.sair, name='sair'),
 ]
 

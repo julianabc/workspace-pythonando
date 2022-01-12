@@ -21,7 +21,7 @@ DEBUG = config("DEBUG", cast=bool)# tem que ser booleano
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# Application definition (declaração de apps aqui)
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -30,7 +30,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'autenticacao', # declaração do app criado
+    # meus apps criados
+    'autenticacao',
+    'plataforma',
+     
 ]
 
 MIDDLEWARE = [
