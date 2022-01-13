@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .models import Cidade, Imovei # para poder apresentar em home
+from django.shortcuts import get_object_or_404
 
 # sempre que tiver essa @ significa que o metodo só funciona com o login feito
 # significa que caso não esteja logado, redireciona para a pagina de logar
@@ -38,5 +39,17 @@ def home(request):
 
         # obs: mexer depois para a filtragem passar o valor zero pois tá sempre indo ou franca ou ribeirao
     # esse novo parametro envia imoveis para dentro de home
-    return render(request, 'home.html', {'imoveis': imoveis, 'cidades': cidades}) 
-    
+    return render(request, 'home.html', {'imoveis': imoveis, 'cidades': cidades})
+
+
+
+def imovel(request, id):
+    # busca no banco de dados o imovel igual a id
+    # caso não encontre, dá um erro 404
+    imovel = get_object_or_404(Imovei, id=id)
+
+    # mostra na tela 2 imoveis na mesma cidade e exclui o que já está sendo visitado
+    sugestoes = Imovei.objects.filter(cidade=imovel.cidade).exclude(id=id)[:2]
+
+    # renderizar pagina
+    return render(request, 'imovel.html', {'imovel': imovel, 'sugestoes': sugestoes, 'id': id})
