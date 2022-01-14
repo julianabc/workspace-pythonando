@@ -7,4 +7,5 @@ urlpatterns = [
 
     # uma url dinamica para exibir imovel ao ser clicado
     path('imovel/<str:id>', views.imovel, name="imovel"),
+    path('agendar_visitas', views.agendar_visitas, name="agendar_visitas"),
 ]

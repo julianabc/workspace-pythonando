@@ -1,7 +1,8 @@
+import http
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from .models import Cidade, Imovei # para poder apresentar em home
+from .models import Cidade, Imovei, Visitas # para poder apresentar em home
 from django.shortcuts import get_object_or_404
 
 # sempre que tiver essa @ significa que o metodo só funciona com o login feito
@@ -53,3 +54,13 @@ def imovel(request, id):
 
     # renderizar pagina
     return render(request, 'imovel.html', {'imovel': imovel, 'sugestoes': sugestoes, 'id': id})
+
+
+def agendar_visitas(request):
+    # pegar dados importantes para agendar a visita
+    usuario = request.user
+    dia = request.POST.get('dia')
+    horario = request.POST.get('horario')
+    imovel = request.POST.get('id_imovel')
+    
+    # continuar aqui
