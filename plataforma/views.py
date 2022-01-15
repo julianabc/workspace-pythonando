@@ -1,6 +1,5 @@
-import http
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Cidade, Imovei, Visitas # para poder apresentar em home
 from django.shortcuts import get_object_or_404
@@ -61,6 +60,34 @@ def agendar_visitas(request):
     usuario = request.user
     dia = request.POST.get('dia')
     horario = request.POST.get('horario')
-    imovel = request.POST.get('id_imovel')
+    id_imovel = request.POST.get('id_imovel')
     
-    # continuar aqui
+    # criar visitas - instanciar essa classe
+    visita = Visitas(
+        imovel_id = id_imovel,
+        usuario = usuario,
+        dia = dia,
+        horario = horario
+    )
+
+    # efetivar no banco de dados
+    visita.save()
+
+    # redirecionar para a pagina de agendamentos
+    return redirect('/agendamentos')
+
+# mostrar as visitas agendadas
+def agendamentos(request):
+    # traz apenas as visitas do usuario logado
+    visitas = Visitas.objects.filter(usuario=request.user)
+
+    # renderiza para a pagina que está
+    return render(request, "agendamentos.html", {'visitas': visitas})
+
+
+# metodo para cancelar agendamento
+def cancelar_agendamento(request, id):
+    visitas = get_object_or_404(Visitas, id=id) # busca visita agendada ou retorna erro
+    visitas.status = "C" # modifica o status para cancelado
+    visitas.save() # salva
+    return redirect('/agendamentos') # redireciona para a pagina de agendamentos
